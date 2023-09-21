@@ -132,10 +132,12 @@ int main()
 	unsigned int sesc = 987654321; //초
 	unsigned int day = 0, hour = 0, min = 0, sec = 0;
 	day = sesc / (60 * 60 * 24);
-	hour = (sesc - day * 24);
+	hour = (sesc - day * (60 * 60 * 24)) / (60 * 60);
+	min = (sesc - day * (60 * 60 * 24) - hour * (60*60)) / 60;
+	sec = (sesc - day * (60 * 60 * 24) - hour * (60 * 60) - min * 60);
 
 	printf("%d일 ", day);
-	printf("%d시 ", hour);
+	printf("%d시간 ", hour);
 	printf("%d분 ", min);
 	printf("%d초\n", sec);
 
