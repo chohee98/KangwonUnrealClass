@@ -131,10 +131,16 @@ int main()
 	//문제 아래 time 들어있는 초 값에 분과 시간을 구해라.
 	unsigned int sesc = 987654321; //초
 	unsigned int day = 0, hour = 0, min = 0, sec = 0;
-	day = sesc / (60 * 60 * 24);
+	/*day = sesc / (60 * 60 * 24);
 	hour = (sesc - day * (60 * 60 * 24)) / (60 * 60);
 	min = (sesc - day * (60 * 60 * 24) - hour * (60*60)) / 60;
-	sec = (sesc - day * (60 * 60 * 24) - hour * (60 * 60) - min * 60);
+	sec = (sesc - day * (60 * 60 * 24) - hour * (60 * 60) - min * 60);*/
+
+	sec = sesc % 60; //0~59
+	min = (sesc / 60) % 60; //0~59
+	hour = ((sesc / 60) / 60) % 24;
+	day = ((sesc / 60) / 60) / 24;
+
 
 	printf("%d일 ", day);
 	printf("%d시간 ", hour);
