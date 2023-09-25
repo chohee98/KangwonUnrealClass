@@ -77,6 +77,29 @@ int SumTo(int Num)
 	return Sum;
 }
 
+int AAA()
+{
+	while (1)
+	{
+		printf("1st While! Start\n");
+		break;
+		printf("1st While! End\n");
+	}
+	while (1)
+	{
+		printf("2st While! Start\n");
+		return 0;	//while값이 아닌 함수 자체를 종료
+		printf("2st While! End\n");
+	}
+	while (1)
+	{
+		printf("3st While! Start\n");
+		break;
+		printf("3st While! End\n");
+	}
+	return 0;
+}
+
 int main()
 {
 	//unsigned int nResult = 0;
@@ -118,8 +141,46 @@ int main()
 
 	//1~n까지 합 구하는 함수
 	//int SumTo(int Num)
-	int num = 5;
-	printf("1~%d까지의 합 = %d\n", num, SumTo(num));
+	//int num = 5;
+	//printf("1~%d까지의 합 = %d\n", num, SumTo(num));
+
+
+	////while 문
+	////조건식이 참이면 아래 가로 안에 코드를 실행한다.
+	////조건식이 거짓이면 while문을 종료하고 다음 코드 실행.
+	//int nResult = 1;
+	//int i = 1;
+	//while (true /*조건식*/)
+	//{
+	//	printf("i=%d\n", i);
+	//	i++;
+	//	printf("break 실행전\n");
+	//	break;//이 명령어를 만나면 while 즉시 종료한다. 아래 코드 실행 안됨.
+	//	printf("break 실행후\n");
+	//}
+
+	////0~Num까지 짝수만 더하기
+	//int i = 0, Num = 10;
+	//int nResult = 0;
+	//while (i <= Num)
+	//{
+	//	i++;
+	//	if (i % 2 != 0)
+	//		continue;
+	//	
+	//	nResult += i;
+	//}
+	//printf("0~Num EvenSum=%d", nResult);
+
+	/*int nResult = 0, Num = 10;
+	for (int i = 0; i <= Num; i++)
+	{
+		if (i % 2 == 0)
+			nResult += i;
+	}
+	printf("0~Num EvenSum=%d", nResult);*/
+
+	//AAA();
 
 
 	return 0;
