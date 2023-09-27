@@ -52,7 +52,7 @@ void printNumber(const int* num)
 	printf("print number=%d\n", *num);
 }
 
-void printNumber2(const int& num)
+void printNumber2(const int& num) //여기서 &는 참조 레퍼런스!
 {
 	//*num = 10 //불가. num을 변수로 받아서
 	printf("print number2=%d\n", num);
