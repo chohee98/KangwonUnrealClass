@@ -54,6 +54,7 @@ void printNumber(const int* num)
 
 void printNumber2(const int& num)
 {
+	//*num = 10 //불가. num을 변수로 받아서
 	printf("print number2=%d\n", num);
 }
 
@@ -177,4 +178,5 @@ int main()
 
 	printNumber(&value);
 	printNumber2(value);
+
 }
