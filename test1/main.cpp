@@ -29,7 +29,7 @@ int main()
 
 	//abcdef를 역으로 출력 fedcba
 	wchar_t szWChar[20] = L"abcdef";
-	for (int i = wcslen(szWChar); i >= 0; i--)
+	for (int i = wcslen(szWChar); i >= 0; --i)
 	{
 		wprintf(L"%c", szWChar[i]);
 	}printf("\n\n");
@@ -40,7 +40,7 @@ int main()
 	wchar_t szWCharInput[20] = L"";
 	//wscanf_s는 입력을 받는 기능을 사용하겠다.
 	//L"%ls" 변수 형태로 입력을 받는다.
-	// "szWCharInput"변수에 입력한 값을 넣어주겠다
+	// "szWCharInput"변수에 입력한 값을 넣어주겠다0
 	// "(unsigned)_countof(szWCharInput)" 는 값을 넣을 변수에 크기
 	//fflush(stdin);
 	printf("문자를 입력하시오: ");
@@ -52,7 +52,7 @@ int main()
 	cnt = 0;
 	for (int i = 0; i < wcslen(szWCharInput); i++)
 	{
-		if(*(szWCharInput +i) == 'a')
+		if(*(szWCharInput + i) == 'a')
 			cnt++;
 	}
 	printf("개수: %d\n", cnt);
