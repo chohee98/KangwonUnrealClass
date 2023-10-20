@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"	// 컴파일 속도를 빠르게 하기위해 기본적인 최소한에 라이브러리 포함한 헤더
+#include "Public/Tools/InterfacePlayObj.h"
 #include "GameFramework/Actor.h"	// AActor 클래스 헤더 파일
 
 // generated.h 언리얼 클래스 생성 처리하는 헤더 (중요!!) - 언리얼 클래스 생성 기본 규칙
@@ -12,10 +13,9 @@
 
 // UNREALCODE_API : 이 클래스는 UNREALCODE_API 모듈에 포함된다.
 UCLASS()	//언리얼 클래스 선언 - 언리얼 클래스 생성 기본 규칙
-class UNREALCODE_API AMoveLeftRight : public AActor // public AActor : AActor에 기능 상속 받겠다.
+class UNREALCODE_API AMoveLeftRight : public AActor, public IInterfacePlayObj // public AActor : AActor에 기능 상속 받겠다.
 {
 	GENERATED_BODY() //언리얼 코드 생성 함수 - 언리얼 클래스 생성 기본 규칙
-
 
 public:	
 	// Sets default values for this actor's properties
@@ -30,6 +30,16 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+	UFUNCTION()
+	void EventOverlap(bool isBegin);
+
+public:
+	UFUNCTION(BlueprintCallable, BlueprintNativeEvent)
+	void Code_DoPlay(bool IsPlay);// 블루프린트 호출용 함수명 선언
+
+	virtual void Code_DoPlay_Implementation(bool IsPlay) override;// c++에서 실행될 함수
+
+public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	USceneComponent* Scene;
 
@@ -38,6 +48,10 @@ public:
 	UStaticMeshComponent* StaticMesh; 
 	// 포인터는 가리키는 것. 객체가 아님. new를 사용하면 가리키는 곳에 객체 생성 가능
 
-	float LocX;
-	bool IsMoveRight;
+	float m_LocX;
+	bool m_IsMoveRight;
+	bool m_IsPlay;
+
+	UPROPERTY(EditAnyWhere, BlueprintReadOnly)
+	TObjectPtr<class ASwitch> m_Switch;
 };

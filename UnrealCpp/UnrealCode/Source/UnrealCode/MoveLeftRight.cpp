@@ -2,25 +2,18 @@
 
 
 #include "MoveLeftRight.h"
+#include "Switch.h"
 
 // Sets default values
-AMoveLeftRight::AMoveLeftRight() : IsMoveRight(true), LocX(0)
+AMoveLeftRight::AMoveLeftRight() : m_LocX(0), m_IsMoveRight(true), m_IsPlay(false)
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
-
-	// CreateDefaultSubobject : new 키워드와 같이 언리얼에서 동적으로 객체를 생성하는 키워드
-	// TEXT :언리얼에서 사용하는 문자형 중에 하나
-	// <USceneComponent>(TEXT("SceneRootRoot") // USceneComponent 객체를 "SceneRootRoot" 이름으로 동적으로 생성
-	// <UStaticMeshComponent>(TEXT("mymyMesh") // UStaticMeshComponent 객체를 "mymyMesh" 이름으로 동적으로 생성
 	Scene = CreateDefaultSubobject<USceneComponent>(TEXT("SceneRootRoot"));
 	StaticMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("mymyMesh"));
 
-	SetRootComponent(Scene);	// Scene을 Root Component로 올리겠다.
-	//RootComponent = Scene;	// Scene을 Root Component로 올리겠다. (위에와 동일한 기능)
+	SetRootComponent(Scene);
 
-	// AttachToComponent : Component 붙이는 기능
-	// Scene에 붙인다. 현재 자표값을 Scene 기준에 Relative(상대) 좌표계로
 	StaticMesh->AttachToComponent(Scene, FAttachmentTransformRules::KeepRelativeTransform);
 
 	// RootComponent에 붙인다. 현재 자표값을 RootComponent 기준에 Relative(상대) 좌표계로
@@ -47,7 +40,9 @@ AMoveLeftRight::~AMoveLeftRight()
 void AMoveLeftRight::BeginPlay()
 {
 	Super::BeginPlay();
-	
+
+	if (IsValid(m_Switch))
+		m_Switch->FDele_EventOverlap.AddDynamic(this, &AMoveLeftRight::EventOverlap);	
 }
 
 // Called every frame
@@ -55,23 +50,35 @@ void AMoveLeftRight::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime); // 오버라이드한 함수인 경우 부모 함수를 실행한다.
 
-	if (IsMoveRight)
+	if (m_IsPlay == false)
+		return;
+
+	if (m_IsMoveRight)
 	{
-		LocX += 1; //오른쪽
-		if (LocX >= 200)
-			IsMoveRight = false; // 움직일 방향
+		m_LocX += 1; //오른쪽
+		if (m_LocX >= 200)
+			m_IsMoveRight = false; // 움직일 방향
 	}
 	else
 	{
-		LocX -= 1; // 왼쪽
-		if (LocX <= -200)
-			IsMoveRight = true;
+		m_LocX -= 1; // 왼쪽
+		if (m_LocX <= -200)
+			m_IsMoveRight = true;
 	}
 	
 	
 	// SetRelativeLocation : 상대적인 위치값을 설정한다.
 	// FVector : 언리얼에서 사용하는 3차원 좌표 변수
-	StaticMesh->SetRelativeLocation(FVector(LocX, 0, 0));
+	StaticMesh->SetRelativeLocation(FVector(m_LocX, 0, 0));
+}
 
+void AMoveLeftRight::EventOverlap(bool isBegin)
+{
+	m_IsPlay = isBegin;
+}
+
+void AMoveLeftRight::Code_DoPlay_Implementation(bool IsPlay)
+{
+	m_IsPlay = IsPlay;
 }
 
